@@ -20,7 +20,6 @@ import org.update4j.Update;
 public class AppUpdater {
 	public final String APP_XML_CONFIG_URI;
 	private final String API_KEY;
-	private int timeOut = 0;
 
 	public AppUpdater() throws IOException {
 		Properties prop = new Properties();
@@ -43,11 +42,10 @@ public class AppUpdater {
 		InputStream isReader = getClass().getClassLoader().getResourceAsStream("config.properties");
 
 		boolean nextIsURI = false;
-		boolean nextIsKey = false;
-		boolean nextIsTimeOut = false;
+		boolean nextIsKey = false;		
 		String key = "";
-		String uri = "";
-
+		String uri = "";		
+		
 		for (String argProp : props) {
 			if (argProp.toLowerCase().equals("-uri")) {
 				nextIsURI = true;
@@ -66,16 +64,7 @@ public class AppUpdater {
 				key = argProp.trim();
 				nextIsKey = false;
 				continue;
-			}
-			if (argProp.toLowerCase().equals("-timeout")) {
-				nextIsTimeOut = true;
-				continue;
-			}
-			if (nextIsTimeOut) {
-				timeOut = Integer.parseInt(argProp.trim());
-				nextIsTimeOut = false;
-				continue;
-			}
+			}			
 		}
 
 		if (isReader != null) {
